@@ -1,0 +1,10 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: shiggyapibutgood
+Upstream-Contact: Linnea Gräf <shiggy@nea.moe>
+Source: https://shiggyapibutgood.nea.moe
+
+# Sample paragraph, commented out:
+#
+# Files: src/*
+# Copyright: $YEAR $NAME <$CONTACT>
+# License: ...
