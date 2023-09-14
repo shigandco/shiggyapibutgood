@@ -4,4 +4,4 @@
 #
 # SPDX-License-Identifier: MIT
 
-socat TCP4-LISTEN:${PORT-8080},fork EXEC:"$(dirname "$0")"/shiggy.sh
+socat -t5 TCP4-LISTEN:${PORT-8080},fork EXEC:"$(dirname "$0")"/shiggy.sh

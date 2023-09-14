@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# SPDX-FileCopyrightText: 2023 Linnea Gräf <nea@nea.moe>
+#
+# SPDX-License-Identifier: MIT
+
 mkdir -p posts
 n=0
 while true; do
