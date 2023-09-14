@@ -11,7 +11,6 @@ function dbg() {
 }
 self="$0"
 read -r method path http
-dbg test
 
 source_ip=unknown
 while read -r line; do
@@ -43,7 +42,6 @@ function content_type() {
 
 function content_length() {
 	echo "Content-Length: $1"
-	dbg "Sending content length of $1"
 }
 
 function end_headers() {
@@ -56,11 +54,9 @@ function resolve_file() {
 
 function send_file() {
 	filename="$(resolve_file "$1")"
-	dbg Trying to send "$filename"
 	content_length $(wc -c "$filename" | cut -d ' ' -f 1)
 	end_headers
 	cat <"$filename"
-	dbg Finished sending file
 }
 
 function send_heredoc() {
@@ -81,6 +77,7 @@ function send_file_if_exists() {
 }
 
 function send_404() {
+	dbg 404 hit by $source_ip
 	begin_response 404 "Not Found"
 	content_type "text/html"
 	send_heredoc <<-'EOF'
@@ -163,7 +160,7 @@ case "$path" in
 }
 '
 		json="$(jq -n --arg report "Shiggy # $shiggy_id has been reported" --arg ip "$source_ip" "$structure")"
-		curl $REPORT_WEBHOOK -X POST -H "Content-Type: multipart/form-data" -F "payload_json=$json" -F'files[0]=@'"posts/$shiggy_id;filename=SPOILER_shiggy.png">&2
+		curl $REPORT_WEBHOOK -X POST -H "Content-Type: multipart/form-data" -F "payload_json=$json" -F'files[0]=@'"posts/$shiggy_id;filename=SPOILER_shiggy.png" >&2
 		begin_response 200 Found
 		content_type text/html
 		send_heredoc <<EOF
@@ -214,7 +211,6 @@ EOF
 	send_file 404.png
 	;;
 *)
-	dbg "$path" does not match what i expected
 	send_404
 	;;
 esac
